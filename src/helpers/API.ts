@@ -1,0 +1,1 @@
+export const PREFIX = 'http://45.153.191.206/api/v1/';
