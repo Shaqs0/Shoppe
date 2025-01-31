@@ -1,6 +1,6 @@
 export function CardButton({ image, title, price }: { image: string, title: string, price: number }) {
 	return (
-		<div className="overflow-hidden rounded-lg">
+		<div className="cursor-pointer overflow-hidden rounded-lg">
 			<img 
 				src={image} 
 				alt={title} 

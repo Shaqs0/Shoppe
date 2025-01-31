@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { cartIcon, Logo, profileIcon, searchIcon, sepLine } from '../assets';
+import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
 
 export function Layout() {
 	return (
@@ -25,8 +25,18 @@ export function Layout() {
 			<main className="grow">
 				<Outlet />
 			</main>
-			<footer className="mt-24 bg-[gray-800] p-4 text-center">
-				<p>Footer content</p>
+			<footer className="mb-24 mt-40 border-t border-[#D8D8D8]">
+				<div className='mt-12 flex'>
+					<ul className="flex gap-[41px] text-[#707070]">
+						<li className='cursor-pointer'>CONTACT</li>
+						<li className='cursor-pointer'>TERMS OF SERVICES</li>
+						<li className='cursor-pointer'>SHIPPING AND RETURNS</li>
+					</ul>
+				</div>
+				<div className='mt-12 flex items-center justify-between'>
+					<p>© 2025 Shoppe. <span className='text-[#707070]'>Terms of use</span> and <span className='text-[#707070]'>privacy policy</span></p>
+					<img src={mediaIcons}/>
+				</div>
 			</footer>
 		</div>
 	);
