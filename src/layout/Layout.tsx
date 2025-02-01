@@ -1,18 +1,34 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
 
 export function Layout() {
+	const location = useLocation();
+
 	return (
 		<div className="mx-auto flex min-h-screen  w-[1248px] max-w-full flex-col px-4">
-			<header className="mt-[72px] flex items-center justify-between">
+			<header className="mt-[72px] flex items-center justify-between border-b border-[#D8D8D8] pb-4">
 				<div>
-					<img src={Logo} alt="Logo" className="w-24 md:w-32 lg:w-40" />
+					<Link to='/'>
+						<img src={Logo} alt="Logo" className="w-24 cursor-pointer md:w-32 lg:w-40" />
+					</Link>
 				</div>
 				<div className="flex items-center">
 					<ul className="mr-12 hidden cursor-pointer gap-8 md:flex lg:gap-16">
-						<li>Shop</li>
-						<li>Blog</li>
-						<li>Our Story</li>
+						<Link to='/shop'className={`${
+							location.pathname === '/shop' ? 'link-text' : ''
+						}`}>
+							Shop 
+						</Link>
+						<Link to='/blog'className={`${
+							location.pathname === '/blog' ? 'link-text' : ''
+						}`}>
+							Blog 
+						</Link>
+						<Link to='/story'className={`${
+							location.pathname === '/story' ? 'link-text' : ''
+						}`}>
+							Our Story
+						</Link>
 					</ul>
 					<img src={sepLine} alt="Separator Line" className="" />
 					<div className="ml-12 flex cursor-pointer items-center gap-4 md:ml-12 md:gap-[39px]">

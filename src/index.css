@@ -17,3 +17,8 @@ body {
   font-family: "DM Sans", sans-serif;
   overflow-x: hidden;
 }
+
+.link-text {
+  @apply relative after:absolute after:bottom-[-20px] after:left-0 after:h-[2px] after:w-full after:bg-[black];
+}
+
