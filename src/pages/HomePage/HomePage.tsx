@@ -22,6 +22,7 @@ export function HomePage() {
 		};
 		fetchSliderData();
 	}, []);
+	
 
 
 	useEffect(() => {

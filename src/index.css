@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
+* {
       outline: 1px solid grey !important;
-} */
+}
 
 body {
   display: flex;
@@ -20,5 +20,22 @@ body {
 
 .link-text {
   @apply relative after:absolute after:bottom-[-20px] after:left-0 after:h-[2px] after:w-full after:bg-[black];
+}
+
+.toggle {
+  @apply relative h-5 w-9 cursor-pointer appearance-none rounded-full bg-[gray-300] transition-all;
+}
+
+.toggle:checked {
+  @apply bg-[grey];
+}
+
+.toggle::before {
+  content: "";
+  @apply absolute left-1 top-1 h-3 w-3 rounded-full bg-[white] transition-all;
+}
+
+.toggle:checked::before {
+  @apply translate-x-4;
 }
 
