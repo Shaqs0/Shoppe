@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
+*{
       outline: 1px solid grey !important;
-} */
+}
 
 body {
   display: flex;
@@ -38,4 +38,16 @@ body {
 .toggle:checked::before {
   @apply translate-x-4;
 }
+
+@layer components {
+  .custom-swiper .swiper-pagination-bullet {
+    @apply w-3 h-3 bg-[white] opacity-100 transition-all scale-90;
+  }
+
+  .custom-swiper .swiper-pagination-bullet-active {
+    @apply border-[1px] border-[white] scale-125;
+    background-color: var(--active-bullet-color);
+  }
+}
+
 

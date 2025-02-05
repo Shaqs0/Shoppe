@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 import { CardButton } from '../../components';
 import { Product } from '../../interfaces/product.interface';
 
@@ -13,7 +15,7 @@ export function HomePage() {
 		const fetchSliderData = async () => {
 			try {
 				const response = await axios.get(
-					`${PREFIX}Product/get-slider-info?languageCode=RU%2Fru&platform=desktop`
+					`${PREFIX}Product/get-slider-info?languageCode=EN%2Fen&platform=desktop`
 				);
 				setSliderProducts(response.data.products);
 				console.log('Slider products:', response.data);
@@ -25,12 +27,11 @@ export function HomePage() {
 	}, []);
 	
 
-
 	useEffect(() => {
 		const fetchNewProducts = async () => {
 			try {
 				const response = await axios.get(
-					`${PREFIX}Product/get-new-product?languageCode=RU%2Fru&platform=desktop`
+					`${PREFIX}Product/get-new-product?languageCode=EN%2Fen&platform=desktop`
 				);
 				setNewProducts(response.data.products);
 				console.log('New products:', response.data);
@@ -49,7 +50,15 @@ export function HomePage() {
 				spaceBetween={50}
 				slidesPerView={1}
 				loop={isSliderLoopEnabled}
-				autoplay={{ delay: 3000 }}
+				autoplay={{
+					delay: 4000,
+					disableOnInteraction: false,
+				}}
+				pagination={{
+					clickable: true,
+				}}
+				modules={[Autoplay, Pagination]}
+				className="custom-swiper"
 			>
 				{sliderProducts.map((product) => (
 					<SwiperSlide key={product.productId}>
@@ -62,7 +71,7 @@ export function HomePage() {
 								/>
 							)}
 							{product.title && (
-								<div className="absolute bottom-4 left-4 text-4xl font-bold">
+								<div className="absolute bottom-10 left-4 text-4xl font-bold">
 									{product.title}
 								</div>
 							)}
@@ -83,6 +92,7 @@ export function HomePage() {
 						image={`https://storage.yandexcloud.net/jewelry/${product.productImageId}`}
 						title={product.title}
 						price={product.price.cost}
+						currency={product.price.currency}
 					/>
 				))}
 			</div>
