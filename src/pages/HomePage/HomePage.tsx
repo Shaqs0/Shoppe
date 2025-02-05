@@ -3,10 +3,11 @@ import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { CardButton } from '../../components';
+import { Product } from '../../interfaces/product.interface';
 
 export function HomePage() {
-	const [sliderProducts, setSliderProducts] = useState<any[]>([]);
-	const [newProducts, setNewProducts] = useState<any[]>([]);
+	const [sliderProducts, setSliderProducts] = useState<Product[]>([]);
+	const [newProducts, setNewProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
 		const fetchSliderData = async () => {
