@@ -6,6 +6,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { CardButton } from '../../components';
 import { Product } from '../../interfaces/product.interface';
+import { fetchNewProducts } from '../../api/products';
 
 export function HomePage() {
 	const [sliderProducts, setSliderProducts] = useState<Product[]>([]);
@@ -28,18 +29,7 @@ export function HomePage() {
 	
 
 	useEffect(() => {
-		const fetchNewProducts = async () => {
-			try {
-				const response = await axios.get(
-					`${PREFIX}Product/get-new-product?languageCode=EN%2Fen&platform=desktop`
-				);
-				setNewProducts(response.data.products);
-				console.log('New products:', response.data);
-			} catch (error) {
-				console.error('Error fetching new products:', error);
-			}
-		};
-		fetchNewProducts();
+		fetchNewProducts().then(setNewProducts);
 	}, []);
 
 	const isSliderLoopEnabled = sliderProducts.length > 1;
