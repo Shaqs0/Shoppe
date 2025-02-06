@@ -71,8 +71,16 @@ export function HomePage() {
 								/>
 							)}
 							{product.title && (
-								<div className="absolute bottom-10 left-4 text-4xl font-bold">
-									{product.title}
+								<div className="absolute bottom-10 left-4">
+									<div className='flex flex-col text-[white]'>
+										<span className='text-[33px] font-medium'> {product.title} </span>
+										<div className='mt-4 flex items-center justify-start text-[26px]'> 
+											<span>{product.price.currency}</span>
+											<span className='ml-1 gap-2'>{product.price.cost}</span>
+										</div>
+										
+										
+									</div>
 								</div>
 							)}
 						</div>
@@ -88,6 +96,7 @@ export function HomePage() {
 			<div className="mt-16 grid grid-cols-3 gap-6">
 				{newProducts.map((product) => (
 					<CardButton
+						appearance='home'
 						key={product.productId}
 						image={`https://storage.yandexcloud.net/jewelry/${product.productImageId}`}
 						title={product.title}

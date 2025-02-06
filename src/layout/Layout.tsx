@@ -38,7 +38,7 @@ export function Layout() {
 					</div>
 				</div>
 			</header>
-			<main className="min-h-[80vh] grow">
+			<main className="min-h-[80vh] w-full grow">
 				<Outlet />
 			</main>
 			<footer className="mb-24 mt-40 border-t border-[#D8D8D8]">

@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+/* * {
       outline: 1px solid grey !important;
-}
+} */
 
 body {
   display: flex;
@@ -23,11 +23,11 @@ body {
 }
 
 .toggle {
-  @apply relative h-5 w-9 cursor-pointer appearance-none rounded-full bg-[gray-300] transition-all;
+  @apply relative h-5 w-9 cursor-pointer appearance-none rounded-full bg-[#bdbdbd] transition-all;
 }
 
 .toggle:checked {
-  @apply bg-[grey];
+  @apply bg-[#929292];
 }
 
 .toggle::before {
