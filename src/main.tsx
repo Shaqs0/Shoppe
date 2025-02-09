@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Layout } from './layout/Layout';
-import { BlogPage, HomePage, OurStoryPage, ShopPage } from './pages';
+import { BlogPage, HomePage, OurStoryPage, ProductPage, ShopPage } from './pages';
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
 			{
 				path: '/story',
 				element: <OurStoryPage/>
+			},
+			{
+				path: '/product/:id',
+				element: <ProductPage/>
 			}
 		]
 	}

@@ -5,7 +5,7 @@ import { Product } from '../interfaces/product.interface';
 export async function fetchNewProducts(): Promise<Product[]> {
 	try {
 		const response = await axios.get(
-			`${PREFIX}Product/get-new-product?languageCode=RU%2Fru`
+			`${PREFIX}Product/get-new-product?languageCode=EN%2Fen`
 		);
 		console.log('Server response:', response.data);
 

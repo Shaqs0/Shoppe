@@ -1,11 +1,13 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
+import { ScrollToTop } from '../components';
 
 export function Layout() {
 	const location = useLocation();
 
 	return (
 		<div className="mx-auto flex min-h-screen  w-[1248px] max-w-full flex-col px-4">
+			<ScrollToTop/>
 			<header className="mt-[72px] flex items-center justify-between border-b border-[#D8D8D8] pb-4">
 				<div>
 					<Link to='/'>

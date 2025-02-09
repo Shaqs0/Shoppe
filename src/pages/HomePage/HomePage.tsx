@@ -16,7 +16,7 @@ export function HomePage() {
 		const fetchSliderData = async () => {
 			try {
 				const response = await axios.get(
-					`${PREFIX}Product/get-slider-info?languageCode=RU%2Fru`
+					`${PREFIX}Product/get-slider-info?languageCode=EN%2Fen`
 				);
 				setSliderProducts(response.data);
 				console.log('Slider products:', response.data);
@@ -64,7 +64,7 @@ export function HomePage() {
 							{product.title && (
 								<div className="absolute bottom-10 left-4">
 									<div className='flex flex-col text-[white]'>
-										<span className='text-[33px] font-medium'> {product.title} </span>
+										<span className='w-[300px] text-[33px] font-medium'> {product.title} </span>
 										<div className='mt-4 flex items-center justify-start text-[26px]'> 
 											<span>{product.price.currency}</span>
 											<span className='ml-1 gap-2'>{product.price.cost}</span>
@@ -84,7 +84,7 @@ export function HomePage() {
 				<p className='text-xl font-medium text-[#A18A68]'>View All</p>
 			</div>
 
-			<div className="mt-16 grid grid-cols-3 gap-6">
+			<div className="mt-16 grid grid-cols-3 items-start gap-6">
 				{newProducts && newProducts.length > 0 && newProducts.map((product) => (
 					<CardButton
 						appearance="home"
@@ -93,6 +93,7 @@ export function HomePage() {
 						title={product.title}
 						price={product.price.cost}
 						currency={product.price.currency}
+						productId={product.productId}
 					/>
 				))}
 			</div>
