@@ -16,9 +16,9 @@ export function HomePage() {
 		const fetchSliderData = async () => {
 			try {
 				const response = await axios.get(
-					`${PREFIX}Product/get-slider-info?languageCode=EN%2Fen&platform=desktop`
+					`${PREFIX}Product/get-slider-info?languageCode=RU%2Fru`
 				);
-				setSliderProducts(response.data.products);
+				setSliderProducts(response.data);
 				console.log('Slider products:', response.data);
 			} catch (error) {
 				console.error('Error fetching slider data:', error);
@@ -32,14 +32,13 @@ export function HomePage() {
 		fetchNewProducts().then(setNewProducts);
 	}, []);
 
-	const isSliderLoopEnabled = sliderProducts.length > 1;
+
 
 	return (
 		<div className="">
 			<Swiper
 				spaceBetween={50}
 				slidesPerView={1}
-				loop={isSliderLoopEnabled}
 				autoplay={{
 					delay: 4000,
 					disableOnInteraction: false,
@@ -50,16 +49,18 @@ export function HomePage() {
 				modules={[Autoplay, Pagination]}
 				className="custom-swiper"
 			>
+
 				{sliderProducts.map((product) => (
 					<SwiperSlide key={product.productId}>
 						<div className="relative mt-4 h-[646px] rounded-2xl">
 							{product.productImageId && (
 								<img
-									src={`https://storage.yandexcloud.net/jewelry/${product.productImageId}`}
+									src={`https://storage.yandexcloud.net/jewelry/${product.productImageId[0]}`}
 									alt={product.title}
 									className="size-full rounded-2xl object-cover"
 								/>
 							)}
+
 							{product.title && (
 								<div className="absolute bottom-10 left-4">
 									<div className='flex flex-col text-[white]'>
@@ -84,11 +85,11 @@ export function HomePage() {
 			</div>
 
 			<div className="mt-16 grid grid-cols-3 gap-6">
-				{newProducts.map((product) => (
+				{newProducts && newProducts.length > 0 && newProducts.map((product) => (
 					<CardButton
-						appearance='home'
+						appearance="home"
 						key={product.productId}
-						image={`https://storage.yandexcloud.net/jewelry/${product.productImageId}`}
+						image={`https://storage.yandexcloud.net/jewelry/${product.images[0]}`}
 						title={product.title}
 						price={product.price.cost}
 						currency={product.price.currency}

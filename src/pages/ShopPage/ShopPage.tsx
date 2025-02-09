@@ -76,7 +76,7 @@ export function ShopPage() {
 							<CardButton
 								appearance='shop'
 								key={product.productId}
-								image={`https://storage.yandexcloud.net/jewelry/${product.productImageId}`}
+								image={`https://storage.yandexcloud.net/jewelry/${product.images[0]}`}
 								title={product.title}
 								price={product.price.cost}
 								currency={product.price.currency}

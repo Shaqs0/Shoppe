@@ -1,6 +1,13 @@
 export interface Product {
     productId: string;
-    sku: string;
+    language: string;
+    sku?: string;
+    categories: string;
+    productType: string;
+    productSubType: null;
+    description?: string;
+    productImageId: string[];
+    likes: number
     price: {
         cost: number;
         currency: string;
@@ -9,8 +16,15 @@ export interface Product {
         costDiscount: number;
     };
     title: string;
-    description?: string;
-    productImageId: string;
-    onSale: boolean;
-    inStock: boolean;
+    images: string[];
+    specifications: [
+        {
+            name: string,
+            specificationId: string;
+            sku: string,
+            item: string,
+            inStock: boolean;
+        }
+    ]
+   createTimeStamp?: string
 }

@@ -5,9 +5,12 @@ import { Product } from '../interfaces/product.interface';
 export async function fetchNewProducts(): Promise<Product[]> {
 	try {
 		const response = await axios.get(
-			`${PREFIX}Product/get-new-product?languageCode=EN%2Fen&platform=desktop`
+			`${PREFIX}Product/get-new-product?languageCode=RU%2Fru`
 		);
-		return response.data.products;
+		console.log('Server response:', response.data);
+
+		return response.data;
+		
 	} catch (error) {
 		console.error('Error fetching new products:', error);
 		return [];

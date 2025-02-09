@@ -20,7 +20,7 @@ export function CardButton({
 				className={` rounded-lg object-cover
 				${appearance === 'shop' ? 'h-[300px] w-[299px]' : 'flex h-[380px] w-[377px]'}`}
 			/>
-			<div className="ml-4 mt-6 flex w-full flex-col items-start justify-start gap-y-2">
+			<div className="ml-4 mt-3 flex w-full flex-col items-start justify-start gap-y-2">
 				<p className="text-xl text-[black]">{title}</p>
 				<p className="text-xl font-medium text-[#A18A68]">{price} {currency}</p>
 			</div>
