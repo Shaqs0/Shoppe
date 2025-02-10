@@ -80,6 +80,7 @@ export function ShopPage() {
 								title={product.title}
 								price={product.price.cost}
 								currency={product.price.currency}
+								productId={product.productId}
 							/>
 						))}
 					</div>
