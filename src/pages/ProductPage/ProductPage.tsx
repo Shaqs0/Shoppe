@@ -4,12 +4,15 @@ import { Product } from '../../interfaces/product.interface';
 import { fetchNewProducts } from '../../api/products';
 import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
+import { fillStar, Star } from '../../assets';
+import { Button } from '../../components';
 
 export function ProductPage() {
 	const { id } = useParams<{ id: string }>();
 	const [product, setProduct] = useState<Product | null>(null);
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
-	const [raiting, setRaiting] = useState<number | null>(null); 
+	const [raiting, setRaiting] = useState<number | null>(null);
+	const [quantity, setQuantity] = useState<number>(1); 
 
 	useEffect(() => {
 		if (!id) {
@@ -49,12 +52,16 @@ export function ProductPage() {
 	const renderStars = (rating: number) => {
 		const maxStars = 5;
 		return (
-			<div className="flex text-2xl text-[yellow-500]">
+			<div className="flex gap-[10px] text-2xl text-[black]">
 				{[...Array(maxStars)].map((_, i) => (
-					<span key={i}>{i < rating ? '★' : '☆'}</span>
+					<span key={i}>{i < rating ? <img src={fillStar} /> : <img src={Star} />}</span>
 				))}
 			</div>
 		);
+	};
+
+	const handleAddToCart = () => {
+		console.log(`Добавлено в корзину: ${quantity} шт. товара с ID: ${product?.productId}`);
 	};
 
 	return (
@@ -85,18 +92,30 @@ export function ProductPage() {
 
 			<div className="ml-6 mr-[-90px] flex-1 flex-col">
 				<h1 className="text-[26px]">{product.title}</h1>
-				
-				{raiting !== null && <div className="mt-2">{renderStars(raiting)}</div>}
-
 				<p className="mt-[23px] text-xl font-medium text-[#A18A68]">
 					{product.price.currency} {product.price.cost}
 				</p>
-				<p className="text-[gray-700]">{product.description}</p>
-				{product.price.discount && (
-					<p className="text-[red-500]">
-						Скидка: {product.price.percent}% (Новая цена: {product.price.costDiscount})
-					</p>
-				)}
+				{raiting !== null && <div className="mt-[70px]">{renderStars(raiting)}</div>}
+				<p className="mt-[22px] text-base text-[#707070]">{product.description}</p>
+
+				<div className="mt-12 flex items-center gap-4">
+					<div className="flex h-[53px] w-[102px] items-center justify-center rounded-[4px] bg-[#EFEFEF] p-1">
+						<button 
+							className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
+							onClick={() => setQuantity(prev => Math.max(1, prev - 1))} 
+						>
+							-
+						</button>
+						<span className="flex w-[20px] items-center justify-center px-4 text-base">{quantity}</span>
+						<button 
+							className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
+							onClick={() => setQuantity(prev => prev + 1)}
+						>
+							+
+						</button>
+					</div>
+					<Button appearance="addToCart" title="ADD TO CART" onClick={handleAddToCart} />
+				</div>
 			</div>
 		</div>
 	);
