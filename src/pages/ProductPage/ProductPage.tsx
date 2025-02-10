@@ -4,8 +4,8 @@ import { Product } from '../../interfaces/product.interface';
 import { fetchNewProducts } from '../../api/products';
 import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
-import { fillStar, Star } from '../../assets';
-import { Button } from '../../components';
+import { fillStar, Star, Wishlist } from '../../assets';
+import { Button, ProductTabs } from '../../components';
 
 export function ProductPage() {
 	const { id } = useParams<{ id: string }>();
@@ -65,57 +65,68 @@ export function ProductPage() {
 	};
 
 	return (
-		<div className="mt-36 flex p-4">
-			<div className="flex flex-col gap-10">
-				{product.images.map((image) => (
-					<img
-						key={image}
-						src={`https://storage.yandexcloud.net/jewelry/${image}`}
-						alt="Product thumbnail"
-						className={`size-[120px] cursor-pointer rounded-lg object-cover ${
-							selectedImage === image ? 'size-[120px]' : ''
-						}`}
-						onClick={() => setSelectedImage(image)}
-					/>
-				))}
-			</div>
-
-			<div className="ml-10 flex flex-1 justify-center">
-				{selectedImage && (
-					<img
-						src={`https://storage.yandexcloud.net/jewelry/${selectedImage}`}
-						alt="Selected product"
-						className="h-[600px] w-[540px] rounded-lg bg-[lightgray] bg-center object-cover"
-					/>
-				)}
-			</div>
-
-			<div className="ml-6 mr-[-90px] flex-1 flex-col">
-				<h1 className="text-[26px]">{product.title}</h1>
-				<p className="mt-[23px] text-xl font-medium text-[#A18A68]">
-					{product.price.currency} {product.price.cost}
-				</p>
-				{raiting !== null && <div className="mt-[70px]">{renderStars(raiting)}</div>}
-				<p className="mt-[22px] text-base text-[#707070]">{product.description}</p>
-
-				<div className="mt-12 flex items-center gap-4">
-					<div className="flex h-[53px] w-[102px] items-center justify-center rounded-[4px] bg-[#EFEFEF] p-1">
-						<button 
-							className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
-							onClick={() => setQuantity(prev => Math.max(1, prev - 1))} 
-						>
-							-
-						</button>
-						<span className="flex w-[20px] items-center justify-center px-4 text-base">{quantity}</span>
-						<button 
-							className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
-							onClick={() => setQuantity(prev => prev + 1)}
-						>
-							+
-						</button>
-					</div>
-					<Button appearance="addToCart" title="ADD TO CART" onClick={handleAddToCart} />
+		<div className="mt-24 flex flex-col items-center">
+			<div className="flex w-full max-w-[1200px]">
+				<div className="flex flex-col gap-10">
+					{product.images.map((image) => (
+						<img
+							key={image}
+							src={`https://storage.yandexcloud.net/jewelry/${image}`}
+							alt="Product thumbnail"
+							className={`size-[120px] cursor-pointer rounded-lg object-cover ${
+								selectedImage === image ? 'size-[120px]' : ''
+							}`}
+							onClick={() => setSelectedImage(image)}
+						/>
+					))}
 				</div>
+
+				<div className="ml-10 flex flex-1 justify-center">
+					{selectedImage && (
+						<img
+							src={`https://storage.yandexcloud.net/jewelry/${selectedImage}`}
+							alt="Selected product"
+							className="h-[600px] w-[540px] rounded-lg bg-[lightgray] bg-center object-cover"
+						/>
+					)}
+				</div>
+
+				<div className="ml-16 flex-1 flex-col">
+					<h1 className="text-[26px]">{product.title}</h1>
+					<p className="mt-[23px] text-xl font-medium text-[#A18A68]">
+						{product.price.currency} {product.price.cost}
+					</p>
+					{raiting !== null && <div className="mt-[70px]">{renderStars(raiting)}</div>}
+					<p className="mt-[22px] text-base text-[#707070]">{product.description}</p>
+
+					<div className="mt-12 flex items-center gap-4">
+						<div className="flex h-[53px] w-[102px] items-center justify-center rounded-[4px] bg-[#EFEFEF] p-1">
+							<button 
+								className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
+								onClick={() => setQuantity(prev => Math.max(1, prev - 1))} 
+							>
+								-
+							</button>
+							<span className="flex w-[20px] items-center justify-center px-4 text-base">{quantity}</span>
+							<button 
+								className="px-3 py-1 text-lg text-[#707070] hover:text-[black]"
+								onClick={() => setQuantity(prev => prev + 1)}
+							>
+								+
+							</button>
+						</div>
+						<Button appearance="addToCart" title="ADD TO CART" onClick={handleAddToCart} />
+					</div>
+					<img src={Wishlist} className='mt-20 h-[20px] w-[240px] cursor-pointer'/>
+					<div className='mt-[38px] flex flex-col'>
+						<p>SKU: <span className='ml-4 text-[#707070]'>{product.specifications[0].sku}</span></p>
+						<p>Categories: <span className='ml-4 text-[#707070]'>{product.categories}</span></p>
+					</div>
+				</div>
+			</div>
+
+			<div className="mt-32 w-full">
+				<ProductTabs />
 			</div>
 		</div>
 	);
