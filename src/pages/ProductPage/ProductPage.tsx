@@ -5,14 +5,35 @@ import { fetchNewProducts } from '../../api/products';
 import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { fillStar, Star, Wishlist } from '../../assets';
-import { Button, ProductTabs } from '../../components';
+import { Button, CardButton, ProductTabs } from '../../components';
 
 export function ProductPage() {
 	const { id } = useParams<{ id: string }>();
 	const [product, setProduct] = useState<Product | null>(null);
+	const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 	const [raiting, setRaiting] = useState<number | null>(null);
-	const [quantity, setQuantity] = useState<number>(1); 
+	const [quantity, setQuantity] = useState<number>(1);
+
+	const fetchProductRating = async (sku: string) => {
+		try {
+			const response = await axios.get(`${PREFIX}Rating/rating?SKU=${sku}`);
+			setRaiting(response.data.likes);
+		} catch (error) {
+			console.error('Error fetching rating data:', error);
+		}
+	};
+
+	const fetchSimilarProducts = async (sku: string) => {
+		try {
+			const response = await axios.get(
+				`${PREFIX}Product/recommend-products?targetSKU=${sku}&languageCode=EN%2Fen`
+			);
+			setSimilarProducts(response.data);
+		} catch (error) {
+			console.error('Error fetching similar products:', error);
+		}
+	};
 
 	useEffect(() => {
 		if (!id) {
@@ -26,15 +47,16 @@ export function ProductPage() {
 				const foundProduct = products.find(p => p.productId === id);
 				setProduct(foundProduct || null);
 
-				if (foundProduct?.images.length) {
-					setSelectedImage(foundProduct.images[0]);
-				}
+				if (foundProduct) {
+					if (foundProduct.images?.length) {
+						setSelectedImage(foundProduct.images[0]);
+					}
 
-				if (foundProduct?.specifications[0].sku) {
-					const response = await axios.get(
-						`${PREFIX}Rating/rating?SKU=${foundProduct.specifications[0].sku}`
-					);
-					setRaiting(response.data.likes);
+					const sku = foundProduct.specifications?.[0]?.sku;
+					if (sku) {
+						fetchProductRating(sku);
+						fetchSimilarProducts(sku);
+					}
 				}
 			} catch (error) {
 				console.error('Error loading product:', error);
@@ -64,7 +86,6 @@ export function ProductPage() {
 		console.log(`Добавлено в корзину: ${quantity} шт. товара с ID: ${product?.productId}`);
 	};
 
-	console.log(product.baseAdditionalInformation);
 	return (
 		<div className="mt-24 flex flex-col items-center">
 			<div className="flex w-full max-w-[1200px]">
@@ -134,6 +155,23 @@ export function ProductPage() {
 					insert={product.baseAdditionalInformation.Insert}
 					approximateWeight={product.baseAdditionalInformation.ApproximateWeight}
 				/>
+			</div>
+
+			<div className='mt-24 w-full'>
+				<p className='text-[26px]'>Similar Items</p>
+				<div className='mt-12 grid grid-cols-3 items-start gap-14'>
+					{similarProducts && similarProducts.length > 0 && similarProducts.map((product) => (
+						<CardButton
+							appearance="home"
+							key={product.productId}
+							image={`https://storage.yandexcloud.net/jewelry/${product.images[0]}`}
+							title={product.title}
+							price={product.price.cost}
+							currency={product.price.currency}
+							productId={product.productId}
+						/>
+					))}
+				</div>
 			</div>
 		</div>
 	);
