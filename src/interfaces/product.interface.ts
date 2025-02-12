@@ -26,5 +26,12 @@ export interface Product {
             inStock: boolean;
         }
     ]
+    baseAdditionalInformation: {
+        ApproximateWeight: string,
+        weight: string,
+        Inlay: string,
+        Material:string,
+        Insert:string
+    }
    createTimeStamp?: string
 }

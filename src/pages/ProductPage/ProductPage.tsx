@@ -64,6 +64,7 @@ export function ProductPage() {
 		console.log(`Добавлено в корзину: ${quantity} шт. товара с ID: ${product?.productId}`);
 	};
 
+	console.log(product.baseAdditionalInformation);
 	return (
 		<div className="mt-24 flex flex-col items-center">
 			<div className="flex w-full max-w-[1200px]">
@@ -81,7 +82,7 @@ export function ProductPage() {
 					))}
 				</div>
 
-				<div className="ml-10 flex flex-1 justify-center">
+				<div className="ml-6 flex flex-1 justify-center">
 					{selectedImage && (
 						<img
 							src={`https://storage.yandexcloud.net/jewelry/${selectedImage}`}
@@ -91,7 +92,7 @@ export function ProductPage() {
 					)}
 				</div>
 
-				<div className="ml-16 flex-1 flex-col">
+				<div className="ml-8 flex-1 flex-col">
 					<h1 className="text-[26px]">{product.title}</h1>
 					<p className="mt-[23px] text-xl font-medium text-[#A18A68]">
 						{product.price.currency} {product.price.cost}
@@ -125,8 +126,14 @@ export function ProductPage() {
 				</div>
 			</div>
 
-			<div className="mt-32 w-full">
-				<ProductTabs />
+			<div className="mt-24 w-full">
+				<ProductTabs
+					weight={product.baseAdditionalInformation.weight}
+					inlay={product.baseAdditionalInformation.Inlay}
+					material={product.baseAdditionalInformation.Material}
+					insert={product.baseAdditionalInformation.Insert}
+					approximateWeight={product.baseAdditionalInformation.ApproximateWeight}
+				/>
 			</div>
 		</div>
 	);
