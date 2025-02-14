@@ -30,7 +30,7 @@ export function ProductTabs({
 				))}
 			</div>
 
-			<div className="mt-4">
+			<div className="mt-4 h-24">
 				{activeTab === 'additional-info' && (
 					<div>
 						{weight && <p className='mt-1'>Weight: <span className='ml-2 text-[#707070]'>{weight}</span></p>}
