@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Layout } from './layout/Layout';
-import { BlogPage, HomePage, OurStoryPage, ProductPage, ShopPage } from './pages';
+import { BlogPage, HomePage, OurStoryPage, ProductPage, ShopPage, SignPage } from './pages';
 
 const router = createBrowserRouter([
 	{
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
 			{
 				path: '/product/:id',
 				element: <ProductPage/>
+			},
+			{
+				path: '/auth/sign',
+				element: <SignPage/>
 			}
 		]
 	}

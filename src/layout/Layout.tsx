@@ -1,11 +1,13 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, MouseEvent } from 'react';
 import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
 import { ScrollToTop } from '../components';
 
 export function Layout() {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(false); 
 	const profileRef = useRef<HTMLDivElement>(null); 
 	const dropdownRef = useRef<HTMLDivElement>(null); 
 
@@ -29,6 +31,14 @@ export function Layout() {
 			) {
 				setIsDropdownVisible(false);
 			}
+		}
+	};
+
+	const handleProfileClick = () => {
+		if (isAuthenticated) {
+			showDropdown();
+		} else {
+			navigate('/auth/sign');
 		}
 	};
 
@@ -63,13 +73,13 @@ export function Layout() {
 							onMouseEnter={showDropdown}
 							onMouseLeave={handleMouseLeave}
 						>
-							<div className="cursor-pointer">
+							<div className="cursor-pointer" onClick={handleProfileClick}>
 								<img src={profileIcon} className="size-5 md:size-[20px]" alt="Profile Icon" />
 							</div>
-							{isDropdownVisible && (
+							{isDropdownVisible && isAuthenticated && (
 								<div
 									ref={dropdownRef}
-									className="absolute right-0 mt-2 flex w-28 flex-col items-center rounded-lg border border-[gray] bg-[white] shadow-lg"
+									className="absolute right-0 z-10 mt-2 flex w-28 flex-col items-center rounded-lg border border-[gray] bg-[white] shadow-lg"
 									onMouseEnter={showDropdown}
 									onMouseLeave={handleMouseLeave}
 								>
