@@ -3,13 +3,16 @@ import { useState, useRef, MouseEvent } from 'react';
 import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
 import { ScrollToTop } from '../components';
 
+
 export function Layout() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false); 
 	const profileRef = useRef<HTMLDivElement>(null); 
-	const dropdownRef = useRef<HTMLDivElement>(null); 
+	const dropdownRef = useRef<HTMLDivElement>(null);
+
+
 
 	const showDropdown = () => setIsDropdownVisible(true);
 
@@ -41,6 +44,8 @@ export function Layout() {
 			navigate('/auth/sign');
 		}
 	};
+
+	
 
 	return (
 		<div className="mx-auto flex min-h-screen w-[1248px] max-w-full flex-col px-4">
