@@ -72,7 +72,9 @@ export const userSlice = createSlice({
 		logout: (state) => {
 			state.accessToken = null;
 			state.refreshToken = null;
+			localStorage.removeItem(JWT_PERSISTENT_STATE);
 		},
+		
 		clearLoginError: (state) => {
 			state.loginErrorMessage = undefined;
 		},

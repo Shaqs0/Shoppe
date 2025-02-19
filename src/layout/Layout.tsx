@@ -1,18 +1,26 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useRef, MouseEvent } from 'react';
+import { useState, useRef, MouseEvent, useEffect } from 'react';
 import { cartIcon, Logo, mediaIcons, profileIcon, searchIcon, sepLine } from '../assets';
 import { ScrollToTop } from '../components';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
+import { userActions } from '../store/user.slice';
 
 export function Layout() {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-	const [isAuthenticated, setIsAuthenticated] = useState(false); 
-	const profileRef = useRef<HTMLDivElement>(null); 
+	const profileRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
+	const accessToken = useSelector((state: RootState) => state.user.accessToken);
+	const isAuthenticated = !!accessToken; 
 
-
+	useEffect(() => {
+		if (!isAuthenticated) {
+			setIsDropdownVisible(false);
+		}
+	}, [isAuthenticated]);
 
 	const showDropdown = () => setIsDropdownVisible(true);
 
@@ -45,7 +53,10 @@ export function Layout() {
 		}
 	};
 
-	
+	const handleLogout = () => {
+		dispatch(userActions.logout()); 
+		navigate('/'); 
+	};
 
 	return (
 		<div className="mx-auto flex min-h-screen w-[1248px] max-w-full flex-col px-4">
@@ -59,13 +70,13 @@ export function Layout() {
 				<div className="flex items-center">
 					<ul className="mr-12 hidden cursor-pointer gap-8 md:flex lg:gap-16">
 						<Link to="/shop" className={location.pathname === '/shop' ? 'link-text' : ''}>
-              Shop
+							Shop
 						</Link>
 						<Link to="/blog" className={location.pathname === '/blog' ? 'link-text' : ''}>
-              Blog
+							Blog
 						</Link>
 						<Link to="/story" className={location.pathname === '/story' ? 'link-text' : ''}>
-              Our Story
+							Our Story
 						</Link>
 					</ul>
 					<img src={sepLine} alt="Separator Line" />
@@ -84,18 +95,18 @@ export function Layout() {
 							{isDropdownVisible && isAuthenticated && (
 								<div
 									ref={dropdownRef}
-									className="absolute right-0 z-10 mt-2 flex w-28 flex-col items-center rounded-lg border border-[gray] bg-[white] shadow-lg"
+									className="absolute right-0 z-10 mt-2 flex w-28 flex-col items-center rounded-lg border border-[#D8D8D8] bg-[white] shadow-lg"
 									onMouseEnter={showDropdown}
 									onMouseLeave={handleMouseLeave}
 								>
-									<Link to="/profile" className="p-1">
-                    My Profile
+									<Link to="/profile" className="w-full p-1 text-center hover:bg-[#D8D8D8]">
+										My Profile
 									</Link>
-									<Link to="/orders" className="p-1">
-                    My Orders
+									<Link to="/orders" className="w-full p-1 text-center hover:bg-[#D8D8D8]">
+										My Orders
 									</Link>
-									<button className="p-1">
-                    Log Out
+									<button className="w-full p-1 text-center hover:bg-[#D8D8D8]" onClick={handleLogout}>
+										Log Out
 									</button>
 								</div>
 							)}
@@ -116,7 +127,7 @@ export function Layout() {
 				</div>
 				<div className="mt-12 flex items-center justify-between">
 					<p>
-            © 2025 Shoppe. <span className="text-[#707070]">Terms of use</span> and{' '}
+						© 2025 Shoppe. <span className="text-[#707070]">Terms of use</span> and{' '}
 						<span className="text-[#707070]">privacy policy</span>
 					</p>
 					<img src={mediaIcons} alt="Media Icons" />

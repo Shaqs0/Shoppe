@@ -3,42 +3,55 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Layout } from './layout/Layout';
-import { BlogPage, HomePage, OurStoryPage, ProductPage, ShopPage, SignPage } from './pages';
+import { BlogPage, HomePage, OurStoryPage, ProductPage, ProfilePage, ShopPage, SignPage } from './pages';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { ProtectedRoute } from './components';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Layout/>,
+		element: <Layout />,
 		children: [
 			{
 				path: '/',
-				element: <HomePage/>
+				element: <HomePage />
 			},
 			{
 				path: '/shop',
-				element: <ShopPage/>
+				element: <ShopPage />
 			},
 			{
 				path: '/blog',
-				element: <BlogPage/>
+				element: <BlogPage />
 			},
 			{
 				path: '/story',
-				element: <OurStoryPage/>
+				element: <OurStoryPage />
 			},
 			{
 				path: '/product/:id',
-				element: <ProductPage/>
+				element: <ProductPage />
+			},
+			{
+				path: '/profile',
+				element: <ProtectedRoute />, 
+				children: [
+					{
+						path: '',
+						element: <ProfilePage /> 
+					}
+				]
 			},
 			{
 				path: '/auth/sign',
-				element: <SignPage/>
+				element: <SignPage />
 			}
 		]
 	}
 ]);
+
+  
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

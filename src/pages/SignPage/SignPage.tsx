@@ -5,9 +5,11 @@ import { Profile } from '../../interfaces/profile.interface';
 import { userActions } from '../../store/user.slice';
 import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export function SignPage() {
 	const [isSignIn, setIsSignIn] = useState(true);
+	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const dispatch = useDispatch();  
 	const {
@@ -22,16 +24,18 @@ export function SignPage() {
 			if (isSignIn) {
 				result = await loginUser(data);
 				console.log('Sign In Success', result);
+				navigate('/');
 				dispatch(userActions.setTokens({
-					accessToken: result.access_token,
-					refreshToken: result.refresh_token
+					accessToken: result.accessToken,
+					refreshToken: result.refreshToken
 				}));
 			} else {
 				result = await registerUser(data);
 				console.log('Register Success', result);
+				navigate('/');
 				dispatch(userActions.setTokens({
-					accessToken: result.access_token,
-					refreshToken: result.refresh_token
+					accessToken: result.accessToken,
+					refreshToken: result.refreshToken
 				}));
 			}
 		} catch (error) {
